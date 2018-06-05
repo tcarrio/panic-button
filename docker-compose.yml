@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+        panicd:
+                build: .
+                container_name: panicd-app
+                expose:
+                        - 80
+                environment:
+                        - MONGODB_PORT_27017_TCP_ADDR=mongo
+                        - MONGODB_PORT_27017_TCP_PORT=27017
+                        - PANIC_HOST=127.0.0.1
+                        - PANIC_PORT=80
+                depends_on:
+                        - mongo
+                volumes:
+                        - mongodb-data:/data/db
+                networks:
+                        - panicnet
+                restart: always
+
+        mongo:
+                image: "mongo"
+                networks:
+                        - panicnet
+                restart: always
+
+
+volumes:
+        mongodb-data:
+                driver: local
+
+networks:
+        panicnet:
+

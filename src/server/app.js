@@ -52,15 +52,16 @@ const routes = require("./routes");
 mongoose.Promise = global.Promise;
 
 var mongoURI;
+var options = "";
 if(process.env.MONGODB_PORT_27017_TCP_ADDR && process.env.MONGODB_PORT_27017_TCP_PORT){
   var userPass = ''
   if(process.env.MONGODB_USER && process.env.MONGODB_PASS){
     userPass = process.env.MONGODB_USER + ":" + process.env.MONGODB_PASS + "@";
   }
-  if(process.env.MONGODB_AUTH_SRC && userPass){
-    userPass = userPass + "?authSource=" + process.env.MONGODB_AUTH_SRC;
+  if(process.env.MONGODB_AUTH_SRC){
+    options = "?authSource=" + process.env.MONGODB_AUTH_SRC;
   }
-  mongoURI = "mongodb://" + userPass + process.env.MONGODB_PORT_27017_TCP_ADDR + ":" + process.env.MONGODB_PORT_27017_TCP_PORT + "/panic-button"
+  mongoURI = "mongodb://" + userPass + process.env.MONGODB_PORT_27017_TCP_ADDR + ":" + process.env.MONGODB_PORT_27017_TCP_PORT + "/panic-button" + options;
 } else {
   mongoURI = "mongodb://localhost/panic-button";
 }
