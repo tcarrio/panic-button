@@ -2,7 +2,7 @@ version: '2'
 
 services:
         panicd:
-                build: .
+                image: "tcarrio/panicd:compose"
                 container_name: panicd-app
                 ports:
                         - "80:3000"
